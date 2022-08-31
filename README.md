@@ -5,7 +5,7 @@ This requires a registered bare domain within a hosted zone.
 The `add_initial_files` flag will determine what will be shown once the website is deployed.
 
  - If true, an initial home page provided by the module
- - If false, a KeyNotFound error
+ - If false, an XML response with a NoSuchKey error
 
 This means the website structure has been successfully deployed and is ready for your files to be added to the bucket.
 
