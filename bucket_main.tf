@@ -8,7 +8,7 @@ resource "aws_s3_object" "main_initial_root_file" {
 
   bucket = aws_s3_bucket.main.id
   key    = var.root_file
-  source = templatefile("initial_files/index.html", {
+  source = templatefile("${path.module}/initial_files/index.html", {
     BUCKET = local.main_hostname
   })
 }
@@ -18,7 +18,7 @@ resource "aws_s3_object" "main_initial_error_file" {
 
   bucket = aws_s3_bucket.main.id
   key    = var.error_file
-  source = templatefile("initial_files/404.html", {
+  source = templatefile("${path.module}/initial_files/404.html", {
     HOME = var.bare_domain
   })
 }
