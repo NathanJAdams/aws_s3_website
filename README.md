@@ -55,8 +55,8 @@ module "s3website" {
 | bare_domain              |    ✔     | string  |                | Domain name without a www prefix or leading/trailing dots, eg. example.com                                                  |
 | use_bare_domain          |          | boolean | false          | Whether urls will be redirected to the bare domain. If false, the bare domain will be redirected to the www prefixed domain |
 | add_initial_files        |          | boolean | true           | Whether to add initial root and error files                                                                                 |
-| root_file                |          | string  | index.html     | Path to the root file object, e.g. index.html                                                                               |
-| error_file               |          | string  | 404.html       | Path to the error file object, e.g. 404.html                                                                                |
+| root_file                |          | string  | index.html     | Path to the root file object                                                                                                |
+| error_file               |          | string  | 404.html       | Path to the error file object                                                                                               |
 | price_class              |          | string  | PriceClass_100 | CloudFront variable, one of [PriceClass_100, PriceClass_200, PriceClass_All]                                                |
 | minimum_protocol_version |          | string  | TLSv1.2_2021   | CloudFront variable, one of [TLSv1.2_2018, TLSv1.2_2019, TLSv1.2_2021]                                                      |
 
