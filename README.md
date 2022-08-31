@@ -13,8 +13,8 @@ This means the website structure has been successfully deployed and is ready for
 
 This module requires 2 aws providers
 
- - `aws`: the zone to deploy into
- - `aws.us_east_1`: a provider within the us-east-1 zone, CloudFront requires certificates to be in this zone
+ - `aws`: a provider for the region to deploy into
+ - `aws.us_east_1`: a provider that must use the us-east-1 region - CloudFront requires certificates to be in this region
 
 It can be created with the code:
 
@@ -29,7 +29,7 @@ terraform {
 }
 
 provider "aws" {
-  region = local.aws_region
+  region = "us-west-2"
 }
 
 provider "aws" {
