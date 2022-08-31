@@ -1,7 +1,9 @@
-# CloudFront S3 Website terraform module
+# Terraform module for a website using S3 and CloudFront
 
 Generates an empty website backed by S3, available on a https url using CloudFront as the CDN.
-This requires a registered bare domain within a hosted zone.
+
+Requires a bare domain registered with AWS within a hosted zone.
+
 The `add_initial_files` flag will determine what will be shown once the website is deployed.
 
  - If true, an initial home page provided by the module
@@ -14,7 +16,7 @@ This means the website structure has been successfully deployed and is ready for
 This module requires 2 aws providers
 
  - `aws`: a provider for the region to deploy into
- - `aws.us_east_1`: a provider that must use the us-east-1 region - CloudFront requires certificates to be in this region
+ - `aws.us_east_1`: a provider that must use the `us-east-1` region - CloudFront requires certificates to be in this region
 
 It can be created with the code:
 
@@ -37,7 +39,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "s3website" {
+module "website" {
   source  = "github.com/NathanJAdams/aws_s3_website.git?ref=master"
   bare_domain = "example.com"
   providers   = {
@@ -46,6 +48,13 @@ module "s3website" {
   }
 }
 
+output "website_url" {
+  value = module.website.url
+}
+
+output "website_bucket" {
+  value = module.website.bucket
+}
 ```
 
 ## Variables
