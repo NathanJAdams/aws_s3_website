@@ -6,9 +6,10 @@ resource "aws_s3_bucket" "main" {
 resource "aws_s3_object" "main_initial_root_file" {
   count = var.add_initial_files ? 1 : 0
 
-  bucket  = aws_s3_bucket.main.id
-  key     = var.root_file
-  content = templatefile("${path.module}/initial_files/index.html", {
+  bucket       = aws_s3_bucket.main.id
+  key          = var.root_file
+  content_type = "text/html"
+  content      = templatefile("${path.module}/initial_files/index.html", {
     BUCKET = local.main_hostname
   })
 }
@@ -16,9 +17,10 @@ resource "aws_s3_object" "main_initial_root_file" {
 resource "aws_s3_object" "main_initial_error_file" {
   count = var.add_initial_files ? 1 : 0
 
-  bucket  = aws_s3_bucket.main.id
-  key     = var.error_file
-  content = templatefile("${path.module}/initial_files/404.html", {
+  bucket       = aws_s3_bucket.main.id
+  key          = var.error_file
+  content_type = "text/html"
+  content      = templatefile("${path.module}/initial_files/404.html", {
     HOME = var.bare_domain
   })
 }
