@@ -9,12 +9,6 @@ variable "use_bare_domain" {
   description = "Whether urls will redirect to the bare domain. If false, the bare domain will be redirected to the www prefixed domain"
 }
 
-variable "add_initial_files" {
-  default     = true
-  type        = bool
-  description = "Whether to add initial root and error files"
-}
-
 variable "root_file" {
   default     = "index.html"
   type        = string
@@ -53,10 +47,4 @@ variable "minimum_protocol_version" {
     ])
     error_message = "minimum_protocol_version must be one of [TLSv1.2_2018, TLSv1.2_2019, TLSv1.2_2021]"
   }
-}
-
-variable "delete_all_files_on_destroy" {
-  default = false
-  type = bool
-  description = "When destroying the website, true will delete all files in the main bucket, false will cause an error but keep the files"
 }
