@@ -10,12 +10,27 @@ The module will create all other necessary resources.
 ## Usage
 
 The module is hosted on GitHub and can be used by referencing the master branch.
+It requires a aws provider in the us-east-1 region named `aws.us_east_1`.
+It can be used as follows:
 
 ```hcl
-module "website" {
-  source = "github.com/NathanJAdams/aws_s3_website.git?ref=master"
+provider "aws" {
+  region = "eu-west-1"
+}
 
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+}
+
+module "website" {
+  source      = "github.com/NathanJAdams/aws_s3_website.git?ref=master"
   bare_domain = "example.com"
+
+  providers = {
+    aws             = aws
+    aws.us_east_1   = aws.us_east_1
+  }
 }
 ```
 
