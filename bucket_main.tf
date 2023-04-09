@@ -1,9 +1,13 @@
 resource "aws_s3_bucket" "main" {
+  provider      = aws.website
+
   bucket        = local.main_hostname
   force_destroy = true
 }
 
 resource "aws_s3_object" "main_initial_root_file" {
+  provider      = aws.website
+
   bucket       = aws_s3_bucket.main.id
   key          = var.root_file
   content_type = "text/html"
@@ -17,6 +21,8 @@ resource "aws_s3_object" "main_initial_root_file" {
 }
 
 resource "aws_s3_object" "main_initial_error_file" {
+  provider      = aws.website
+
   bucket       = aws_s3_bucket.main.id
   key          = var.error_file
   content_type = "text/html"
@@ -30,6 +36,8 @@ resource "aws_s3_object" "main_initial_error_file" {
 }
 
 resource "aws_s3_bucket_public_access_block" "main" {
+  provider      = aws.website
+
   bucket                  = aws_s3_bucket.main.id
   block_public_acls       = true
   block_public_policy     = true
@@ -38,6 +46,8 @@ resource "aws_s3_bucket_public_access_block" "main" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "main" {
+  provider      = aws.website
+
   bucket = aws_s3_bucket.main.id
   rule {
     object_ownership = "BucketOwnerPreferred"
@@ -45,6 +55,8 @@ resource "aws_s3_bucket_ownership_controls" "main" {
 }
 
 resource "aws_s3_bucket_website_configuration" "main" {
+  provider      = aws.website
+
   bucket = aws_s3_bucket.main.bucket
   index_document {
     suffix = var.root_file
@@ -52,6 +64,8 @@ resource "aws_s3_bucket_website_configuration" "main" {
 }
 
 resource "aws_s3_bucket_versioning" "main" {
+  provider      = aws.website
+
   bucket = aws_s3_bucket.main.id
   versioning_configuration {
     status = "Disabled"
@@ -59,6 +73,8 @@ resource "aws_s3_bucket_versioning" "main" {
 }
 
 resource "aws_s3_bucket_cors_configuration" "main" {
+  provider      = aws.website
+
   bucket = aws_s3_bucket.main.bucket
   cors_rule {
     allowed_headers = ["*"]
@@ -69,6 +85,8 @@ resource "aws_s3_bucket_cors_configuration" "main" {
 }
 
 data "aws_iam_policy_document" "main" {
+  provider      = aws.website
+
   statement {
     sid = "ReadFiles"
     principals {
@@ -98,6 +116,8 @@ data "aws_iam_policy_document" "main" {
 }
 
 resource "aws_s3_bucket_policy" "main" {
+  provider      = aws.website
+
   bucket = aws_s3_bucket.main.id
   policy = data.aws_iam_policy_document.main.json
 }

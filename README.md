@@ -2,7 +2,26 @@
 
 Generates an empty website backed by S3, available on a https url using CloudFront as the CDN.
 
+## Requirements
 It requires a bare domain registered with AWS within a hosted zone.
+For details on how to create a hosted zone, see [this guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html).
+The module will create all other necessary resources.
+
+## Usage
+
+The module is hosted on GitHub and can be used by referencing the master branch.
+
+```hcl
+module "website" {
+  source = "github.com/NathanJAdams/aws_s3_website.git?ref=master"
+
+  bare_domain = "example.com"
+}
+```
+
+## Deleting a website
+Note that deleting a website will delete the bucket and all objects within it.
+If you have any files you want to keep, you should move them out of the bucket before deleting the website.
 
 ## Variables
 

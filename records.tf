@@ -1,4 +1,6 @@
 resource "aws_route53_record" "records" {
+  provider      = aws.website
+
   for_each = tomap({
     (local.main_hostname) = {
       zone_id = aws_cloudfront_distribution.main.hosted_zone_id

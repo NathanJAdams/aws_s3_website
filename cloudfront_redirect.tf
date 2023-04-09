@@ -1,4 +1,6 @@
 resource "aws_cloudfront_distribution" "redirect" {
+  provider      = aws.website
+
   enabled         = true
   is_ipv6_enabled = true
   aliases         = [local.redirect_hostname]

@@ -1,5 +1,6 @@
 resource "aws_acm_certificate" "certificate" {
-  provider                  = local.certificate_region
+  provider      = aws.certificate
+
   domain_name               = var.bare_domain
   subject_alternative_names = [
     "*.${var.bare_domain}"
@@ -11,6 +12,8 @@ resource "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_route53_record" "certificate_record" {
+  provider      = aws.certificate
+
   for_each = {
     for dvo in aws_acm_certificate.certificate.domain_validation_options :
     dvo.domain_name => dvo
@@ -26,7 +29,8 @@ resource "aws_route53_record" "certificate_record" {
 }
 
 resource "aws_acm_certificate_validation" "certificate_validation" {
-  provider                = local.certificate_region
+  provider      = aws.certificate
+
   certificate_arn         = aws_acm_certificate.certificate.arn
   validation_record_fqdns = [for record in aws_route53_record.certificate_record : record.fqdn]
 }

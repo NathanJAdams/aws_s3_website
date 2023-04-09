@@ -1,4 +1,6 @@
 resource "aws_cloudfront_distribution" "main" {
+  provider      = aws.website
+
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = var.root_file
