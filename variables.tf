@@ -4,8 +4,8 @@ variable "bare_domain" {
 }
 
 variable "use_bare_domain" {
-  type        = bool
   default     = false
+  type        = bool
   description = "Whether urls will redirect to the bare domain. If false, the bare domain will be redirected to the www prefixed domain"
 }
 
