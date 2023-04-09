@@ -1,5 +1,5 @@
 locals {
-  certificate_region      = 'us-east-1'
+  certificate_region      = "us-east-1"
   www_hostname            = "www.${var.bare_domain}"
   main_hostname           = var.use_bare_domain ? var.bare_domain : local.www_hostname
   main_https_hostname     = "https://${local.main_hostname}"
