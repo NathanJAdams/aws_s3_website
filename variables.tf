@@ -48,3 +48,50 @@ variable "minimum_protocol_version" {
     error_message = "minimum_protocol_version must be one of [TLSv1.2_2018, TLSv1.2_2019, TLSv1.2_2021]"
   }
 }
+
+variable "oidc_role_name" {
+  type        = string
+  description = "The role name created that will be able to update contents on the S3 bucket"
+}
+
+variable "oidc_connector" {
+  type        = string
+  description = "Which OIDC connector to use, one of [BitBucket, GitHub]"
+  validation {
+    condition = anytrue([
+      var.oidc_connector == "BitBucket",
+      var.oidc_connector == "GitHub"
+    ])
+    error_message = "oidc_connector must be one of [BitBucket, GitHub]"
+  }
+}
+
+variable "oidc_bitbucket" {
+  default = {
+    workspace_name = ""
+    workspace_uuid = ""
+    repository_uuid = ""
+    add_resource = false
+    thumbprint   = ""
+  }
+  type = object({
+    workspace_name = string
+    workspace_uuid = string
+    repository_uuid = string
+    add_resource = bool
+    thumbprint   = string
+  })
+  description = "BitBucket specific OIDC connection"
+}
+
+variable "oidc_github" {
+  default = {
+    account_name = ""
+    repository_name = ""
+  }
+  type = object({
+    account_name = string
+    repository_name = string
+  })
+  description = "GitHub specific OIDC connection"
+}
