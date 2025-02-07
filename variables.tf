@@ -66,32 +66,140 @@ variable "oidc_connector" {
   }
 }
 
-variable "oidc_bitbucket" {
-  default = {
-    workspace_name = ""
-    workspace_uuid = ""
-    repository_uuid = ""
-    add_resource = false
-    thumbprint   = ""
+variable "oidc_bitbucket_workspace_name" {
+  type        = string
+  description = "BitBucket specific OIDC connection | Workspace name"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
   }
-  type = object({
-    workspace_name = string
-    workspace_uuid = string
-    repository_uuid = string
-    add_resource = bool
-    thumbprint   = string
-  })
-  description = "BitBucket specific OIDC connection"
 }
 
-variable "oidc_github" {
-  default = {
-    account_name = ""
-    repository_name = ""
+variable "oidc_bitbucket_workspace_uuid" {
+  type        = string
+  description = "BitBucket specific OIDC connection | Workspace UUID"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
   }
-  type = object({
-    account_name = string
-    repository_name = string
-  })
-  description = "GitHub specific OIDC connection"
+}
+
+variable "oidc_bitbucket_repository_uuid" {
+  type        = string
+  description = "BitBucket specific OIDC connection | Repository UUID"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
+  }
+}
+
+variable "oidc_bitbucket_add_resource" {
+  default     = false
+  type        = bool
+  description = "BitBucket specific OIDC connection | Whether to add terraform oidc resource"
+}
+
+variable "oidc_bitbucket_thumbprint" {
+  type        = string
+  description = "BitBucket specific OIDC connection | OIDC Thumbprint"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
+  }
+}
+
+variable "oidc_github_account_name" {
+  type        = string
+  description = "GitHub specific OIDC connection | Account name"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
+  }
+}
+
+variable "oidc_github_repository_name" {
+  type        = string
+  description = "GitHub specific OIDC connection | Repository name"
+  validation {
+    condition = alltrue([
+      contains([0, 2],
+        sum([
+          (var.oidc_github_account_name == null),
+          (var.oidc_github_repository_name == null)
+        ])),
+      contains([0, 4],
+        sum([
+          (var.oidc_bitbucket_repository_uuid == null),
+          (var.oidc_bitbucket_thumbprint == null),
+          (var.oidc_bitbucket_workspace_name == null),
+          (var.oidc_bitbucket_workspace_uuid == null),
+        ]))
+    ])
+    error_message = "Either all of oidc_github_... values must be null and all of oidc_bitbucket... values must not be null or vice-versa"
+  }
 }
