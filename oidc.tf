@@ -34,31 +34,16 @@ locals {
   oidc_github_subject_variable  = "token.actions.githubusercontent.com:sub"
   oidc_github_subject_value     = "repo:${var.oidc_github_account_name}/${var.oidc_github_repository_name}:*"
 
-  oidc_provider_arn = local.oidc_is_bitbucket
-    ? var.oidc_bitbucket_add_resource
-      ? aws_iam_openid_connect_provider.bitbucket[0].arn
-      : data.aws_iam_openid_connect_provider.bitbucket[0].arn
-    : local.oidc_is_github
-      ? data.aws_iam_openid_connect_provider.github[0].arn
-      : ""
-  oidc_audience_variable = local.oidc_is_bitbucket
-    ? local.oidc_bitbucket_audience_variable
-    : local.oidc_is_github
-      ? local.oidc_github_audience_variable
-      : ""
-  oidc_audience_value = local.oidc_is_bitbucket
-    ? local.oidc_bitbucket_audience_value
-    : local.oidc_is_github
-      ? local.oidc_github_audience_value
-      : ""
-  oidc_subject_variable = local.oidc_is_bitbucket
-    ? local.oidc_bitbucket_subject_variable
-    : local.oidc_is_github
-      ? local.oidc_github_subject_variable
-      : ""
-  oidc_subject_value = local.oidc_is_bitbucket
-    ? local.oidc_bitbucket_subject_value
-    : local.oidc_is_github
-      ? local.oidc_github_subject_value
-      : ""
+  oidc_provider_arn      = local.oidc_is_bitbucket ?
+      var.oidc_bitbucket_add_resource ? aws_iam_openid_connect_provider.bitbucket[0].arn :
+      data.aws_iam_openid_connect_provider.bitbucket[0].arn :
+      local.oidc_is_github ? data.aws_iam_openid_connect_provider.github[0].arn : ""
+  oidc_audience_variable = local.oidc_is_bitbucket ? local.oidc_bitbucket_audience_variable :
+      local.oidc_is_github ? local.oidc_github_audience_variable : ""
+  oidc_audience_value    = local.oidc_is_bitbucket ? local.oidc_bitbucket_audience_value :
+      local.oidc_is_github ? local.oidc_github_audience_value : ""
+  oidc_subject_variable  = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_variable :
+      local.oidc_is_github ? local.oidc_github_subject_variable : ""
+  oidc_subject_value     = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_value :
+      local.oidc_is_github ? local.oidc_github_subject_value : ""
 }
