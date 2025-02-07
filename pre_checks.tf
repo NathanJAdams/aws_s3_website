@@ -1,5 +1,5 @@
 data "http" "bare_domain" {
-  url = var.bare_domain
+  url = "https://${var.bare_domain}"
 }
 
 resource "null_resource" "bare_domain" {
@@ -8,7 +8,7 @@ resource "null_resource" "bare_domain" {
   lifecycle {
     precondition {
       condition     = data.http.bare_domain.status_code == 200
-      error_message = "The provided URL (${var.bare_domain}) is not accessible (did not return a 200 status)."
+      error_message = "The provided URL (${data.http.bare_domain.url}) is not accessible (did not return a 200 status)."
     }
   }
 }
