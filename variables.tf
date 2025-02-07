@@ -60,7 +60,7 @@ variable "oidc_connector" {
   validation {
     condition = anytrue([
       alltrue([
-        var.oidc_connector == "BitBucket",
+        (var.oidc_connector == "BitBucket"),
         (var.oidc_bitbucket_repository_uuid != null),
         (var.oidc_bitbucket_thumbprint != null),
         (var.oidc_bitbucket_workspace_name != null),
@@ -69,7 +69,7 @@ variable "oidc_connector" {
         (var.oidc_github_repository_name == null),
       ]),
       alltrue([
-        var.oidc_connector == "GitHub",
+        (var.oidc_connector == "GitHub"),
         (var.oidc_bitbucket_repository_uuid == null),
         (var.oidc_bitbucket_thumbprint == null),
         (var.oidc_bitbucket_workspace_name == null),
