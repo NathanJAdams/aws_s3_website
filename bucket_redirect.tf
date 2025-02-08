@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "redirect" {
   bucket = local.redirect_hostname
+  tags   = var.tags
 }
 
 resource "aws_s3_bucket_public_access_block" "redirect" {

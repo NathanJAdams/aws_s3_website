@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "main" {
   bucket        = local.main_hostname
   force_destroy = true
+  tags          = var.tags
 }
 
 resource "aws_s3_object" "main_initial_root_file" {
@@ -10,6 +11,7 @@ resource "aws_s3_object" "main_initial_root_file" {
   content      = templatefile("${path.module}/initial_files/index.html", {
     BUCKET = local.main_hostname
   })
+  tags = var.tags
 
   lifecycle {
     ignore_changes = [source]
@@ -23,6 +25,7 @@ resource "aws_s3_object" "main_initial_error_file" {
   content      = templatefile("${path.module}/initial_files/404.html", {
     HOME = var.bare_domain
   })
+  tags = var.tags
 
   lifecycle {
     ignore_changes = [source]
@@ -65,35 +68,6 @@ resource "aws_s3_bucket_cors_configuration" "main" {
     allowed_methods = ["GET"]
     allowed_origins = [local.main_https_hostname]
     max_age_seconds = 3600
-  }
-}
-
-data "aws_iam_policy_document" "main" {
-  statement {
-    sid = "ReadFiles"
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
-    }
-    actions = [
-      "s3:GetObject"
-    ]
-    resources = [
-      "${aws_s3_bucket.main.arn}/*",
-    ]
-  }
-  statement {
-    sid = "ReadFolders"
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.oai.iam_arn]
-    }
-    actions = [
-      "s3:ListBucket"
-    ]
-    resources = [
-      aws_s3_bucket.main.arn
-    ]
   }
 }
 

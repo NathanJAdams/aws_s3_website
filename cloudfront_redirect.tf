@@ -3,6 +3,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   is_ipv6_enabled = true
   aliases         = [local.redirect_hostname]
   price_class     = var.price_class
+  tags            = var.tags
   origin {
     domain_name = aws_s3_bucket_website_configuration.redirect.website_endpoint
     origin_id   = local.redirect_s3_hostname

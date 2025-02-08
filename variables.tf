@@ -48,3 +48,61 @@ variable "minimum_protocol_version" {
     error_message = "minimum_protocol_version must be one of [TLSv1.2_2018, TLSv1.2_2019, TLSv1.2_2021]"
   }
 }
+
+variable "tags" {
+  default     = {}
+  type        = map(string)
+  description = "Map of key->value tags to apply to created resources"
+}
+
+variable "oidc_role_name" {
+  type        = string
+  description = "The role name created that will be able to update contents on the S3 bucket"
+}
+
+variable "oidc_connector" {
+  type        = string
+  description = "Which OIDC connector to use, one of [BitBucket, GitHub]"
+}
+
+variable "oidc_bitbucket_workspace_name" {
+  default     = null
+  type        = string
+  description = "BitBucket specific OIDC connection | Workspace name"
+}
+
+variable "oidc_bitbucket_workspace_uuid" {
+  default     = null
+  type        = string
+  description = "BitBucket specific OIDC connection | Workspace UUID"
+}
+
+variable "oidc_bitbucket_repository_uuid" {
+  default     = null
+  type        = string
+  description = "BitBucket specific OIDC connection | Repository UUID"
+}
+
+variable "oidc_bitbucket_add_resource" {
+  default     = false
+  type        = bool
+  description = "BitBucket specific OIDC connection | Whether to add terraform oidc resource"
+}
+
+variable "oidc_bitbucket_thumbprint" {
+  default     = null
+  type        = string
+  description = "BitBucket specific OIDC connection | OIDC Thumbprint"
+}
+
+variable "oidc_github_account_name" {
+  default     = null
+  type        = string
+  description = "GitHub specific OIDC connection | Account name"
+}
+
+variable "oidc_github_repository_name" {
+  default     = null
+  type        = string
+  description = "GitHub specific OIDC connection | Repository name"
+}

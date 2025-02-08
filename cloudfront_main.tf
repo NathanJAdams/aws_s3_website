@@ -4,6 +4,7 @@ resource "aws_cloudfront_distribution" "main" {
   default_root_object = var.root_file
   aliases             = [local.main_hostname]
   price_class         = var.price_class
+  tags                = var.tags
   origin {
     domain_name = aws_s3_bucket.main.bucket_regional_domain_name
     origin_id   = local.main_s3_hostname

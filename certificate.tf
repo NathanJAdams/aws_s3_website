@@ -1,10 +1,11 @@
 resource "aws_acm_certificate" "certificate" {
-  provider                  = aws.us_east_1
-  domain_name               = var.bare_domain
+  provider          = aws.us_east_1
+  domain_name       = var.bare_domain
+  validation_method = "DNS"
+  tags              = var.tags
   subject_alternative_names = [
     "*.${var.bare_domain}"
   ]
-  validation_method = "DNS"
   lifecycle {
     create_before_destroy = true
   }
@@ -19,10 +20,10 @@ resource "aws_route53_record" "certificate_record" {
 
   allow_overwrite = true
   name            = each.value.resource_record_name
-  records         = [each.value.resource_record_value]
   type            = each.value.resource_record_type
   zone_id         = data.aws_route53_zone.zone.zone_id
   ttl             = 60
+  records = [each.value.resource_record_value]
 }
 
 resource "aws_acm_certificate_validation" "certificate_validation" {
