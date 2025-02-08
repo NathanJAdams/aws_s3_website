@@ -1,6 +1,4 @@
 resource "null_resource" "pre_check_oidc_variables" {
-  count = 0
-
   lifecycle {
     precondition {
       condition = anytrue([

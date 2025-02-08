@@ -8,7 +8,7 @@ data "http" "dns_google_name_servers" {
 
 locals {
   actual_name_servers_response = jsondecode(data.http.dns_google_name_servers.response_body)
-  actual_name_servers = reverse(sort([for answer in lookup(local.actual_name_servers_response, "Answer", []) : answer.data]))
+  actual_name_servers = sort([for answer in lookup(local.actual_name_servers_response, "Answer", []) : answer.data])
   expected_name_servers = sort(data.aws_route53_zone.zone.name_servers)
   zone_name = data.aws_route53_zone.zone.name
 }
