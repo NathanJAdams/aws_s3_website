@@ -1,19 +1,4 @@
-data "http" "bare_domain" {
-  url = "https://${var.bare_domain}"
-}
-
-resource "null_resource" "bare_domain" {
-  count = 0
-
-  lifecycle {
-    precondition {
-      condition     = data.http.bare_domain.status_code == 200
-      error_message = "The provided URL (${data.http.bare_domain.url}) is not accessible (did not return a 200 status)."
-    }
-  }
-}
-
-resource "null_resource" "validate_inputs" {
+resource "null_resource" "pre_check_oidc_variables" {
   count = 0
 
   lifecycle {
