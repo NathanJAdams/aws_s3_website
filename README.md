@@ -41,9 +41,6 @@ module "example_website" {
 }
 ```
 
-## Certificate timing
-Validating the ACM certificate relies on DNS validation which may take half an hour to an hour to take effect, so allow plenty of time if using this in an automated pipeline.
-
 ## DNS validation
 DNS validation is used to validate the ACM certificate.
 Name servers must be consistent for it to take place, otherwise the module is forced to wait until they are.
