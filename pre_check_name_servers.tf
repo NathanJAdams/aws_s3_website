@@ -14,8 +14,6 @@ locals {
 }
 
 resource "null_resource" "pre_check_name_servers" {
-  count = 0
-
   lifecycle {
     precondition {
       condition     = local.actual_name_servers == local.expected_name_servers
