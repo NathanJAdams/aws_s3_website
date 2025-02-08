@@ -49,6 +49,12 @@ variable "minimum_protocol_version" {
   }
 }
 
+variable "tags" {
+  default     = {}
+  type        = map(string)
+  description = "Map of key->value tags to apply to created resources"
+}
+
 variable "oidc_role_name" {
   type        = string
   description = "The role name created that will be able to update contents on the S3 bucket"

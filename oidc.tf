@@ -13,9 +13,10 @@ data "aws_iam_openid_connect_provider" "github" {
 resource "aws_iam_openid_connect_provider" "bitbucket" {
   count = (local.oidc_is_bitbucket && var.oidc_bitbucket_add_resource) ? 1 : 0
 
-  url = local.oidc_bitbucket_url
-  client_id_list = [local.oidc_bitbucket_audience_value]
+  url             = local.oidc_bitbucket_url
+  client_id_list  = [local.oidc_bitbucket_audience_value]
   thumbprint_list = [var.oidc_bitbucket_thumbprint]
+  tags            = var.tags
 }
 
 locals {
