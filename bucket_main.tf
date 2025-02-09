@@ -11,7 +11,6 @@ resource "aws_s3_object" "main_initial_root_file" {
   content      = templatefile("${path.module}/initial_files/index.html", {
     BUCKET = local.main_hostname
   })
-  tags = var.tags
 
   lifecycle {
     ignore_changes = [source]
@@ -25,7 +24,6 @@ resource "aws_s3_object" "main_initial_error_file" {
   content      = templatefile("${path.module}/initial_files/404.html", {
     HOME = var.bare_domain
   })
-  tags = var.tags
 
   lifecycle {
     ignore_changes = [source]
