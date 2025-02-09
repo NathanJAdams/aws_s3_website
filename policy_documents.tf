@@ -88,4 +88,13 @@ data "aws_iam_policy_document" "role_access" {
       aws_s3_bucket.main.arn
     ]
   }
+  statement {
+    sid = "InvalidateCloudfront"
+    actions = [
+      "cloudfront:CreateInvalidation"
+    ]
+    resources = [
+      aws_cloudfront_distribution.main.arn
+    ]
+  }
 }
