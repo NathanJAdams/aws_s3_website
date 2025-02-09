@@ -69,6 +69,15 @@ data "aws_iam_policy_document" "main" {
 
 data "aws_iam_policy_document" "role_access" {
   statement {
+    sid = "STSAccess"
+    actions = [
+      "sts:AssumeRoleWithWebIdentity"
+    ]
+    resources = [
+      aws_iam_role.role.arn
+    ]
+  }
+  statement {
     sid = "ReadWriteFiles"
     actions = [
       "s3:PutObject",
