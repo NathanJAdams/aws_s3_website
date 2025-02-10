@@ -5,7 +5,6 @@ resource "null_resource" "pre_check_oidc_variables" {
         alltrue([
           (var.oidc_connector == "BitBucket"),
           (var.oidc_bitbucket_repository_uuid != null),
-          (var.oidc_bitbucket_thumbprint != null),
           (var.oidc_bitbucket_workspace_name != null),
           (var.oidc_bitbucket_workspace_uuid != null),
           (var.oidc_github_account_name == null),
@@ -14,7 +13,6 @@ resource "null_resource" "pre_check_oidc_variables" {
         alltrue([
           (var.oidc_connector == "GitHub"),
           (var.oidc_bitbucket_repository_uuid == null),
-          (var.oidc_bitbucket_thumbprint == null),
           (var.oidc_bitbucket_workspace_name == null),
           (var.oidc_bitbucket_workspace_uuid == null),
           (var.oidc_github_account_name != null),

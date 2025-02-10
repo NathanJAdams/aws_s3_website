@@ -65,6 +65,12 @@ variable "oidc_connector" {
   description = "Which OIDC connector to use, one of [BitBucket, GitHub]"
 }
 
+variable "oidc_use_existing_idp" {
+  type        = bool
+  default     = true
+  description = "Whether to use the existing OIDC identity provider. Set to `false` to create a new one. Only one IDP is needed per git provider (BitBucket or GitHub)"
+}
+
 variable "oidc_bitbucket_workspace_name" {
   default     = null
   type        = string
@@ -81,18 +87,6 @@ variable "oidc_bitbucket_repository_uuid" {
   default     = null
   type        = string
   description = "BitBucket specific OIDC connection | Repository UUID"
-}
-
-variable "oidc_bitbucket_add_resource" {
-  default     = false
-  type        = bool
-  description = "BitBucket specific OIDC connection | Whether to add terraform oidc resource"
-}
-
-variable "oidc_bitbucket_thumbprint" {
-  default     = null
-  type        = string
-  description = "BitBucket specific OIDC connection | OIDC Thumbprint"
 }
 
 variable "oidc_github_account_name" {
