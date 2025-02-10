@@ -52,6 +52,9 @@ Therefore it is important to **double-check name servers are consistent** betwee
 This module performs a pre-check between the hosted zone and https://dns.google, but as yet cannot check the domain.
 If/when hashicorp provide a domain data source, another pre-check will be included that also checks the domain name servers are consistent.
 
+## CloudFront distributions
+It can take around 10-15 minutes to create a CloudFront distribution, so leave enough time to allow it to complete, especially if running in an automated pipeline.
+
 ## Deleting a website
 Note that deleting a website will delete the bucket and all objects within it.
 If you have any files you want to keep, you should **move them out of the bucket before deleting the website**.
@@ -129,7 +132,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-region: ${{ secrets.AWS_REGION }}
-          role-to-assume: "arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE }}"
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           role-session-name: ${{ env.GITHUB_SHA }}
           retry-max-attempts: 3
           mask-aws-account-id: true

@@ -1,19 +1,17 @@
-data "tls_certificate" "oidc" {
+data "aws_iam_openid_connect_provider" "existing_oidc_provider" {
   url = local.oidc_provider_url
 }
 
-data "aws_iam_openid_connect_provider" "provider" {
-  count = var.oidc_use_existing_idp ? 1 : 0
-
+data "tls_certificate" "oidc_provider" {
   url = local.oidc_provider_url
 }
 
-resource "aws_iam_openid_connect_provider" "provider" {
+resource "aws_iam_openid_connect_provider" "oidc_provider" {
   count = var.oidc_use_existing_idp ? 0 : 1
 
   url             = local.oidc_provider_url
   client_id_list  = [local.oidc_audience_value]
-  thumbprint_list = [data.tls_certificate.oidc.certificates[0].sha1_fingerprint]
+  thumbprint_list = [data.tls_certificate.oidc_provider.certificates[0].sha1_fingerprint]
   tags            = var.tags
 }
 
@@ -41,5 +39,5 @@ locals {
   oidc_subject_variable    = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_variable : (local.oidc_is_github ? local.oidc_github_subject_variable : "")
   oidc_subject_value       = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_value : (local.oidc_is_github ? local.oidc_github_subject_value : "")
 
-  oidc_provider_arn        = var.oidc_use_existing_idp ? data.aws_iam_openid_connect_provider.provider[0].arn : aws_iam_openid_connect_provider.provider[0].arn
+  oidc_provider_arn        = var.oidc_use_existing_idp ? data.aws_iam_openid_connect_provider.existing_oidc_provider[0].arn : aws_iam_openid_connect_provider.oidc_provider[0].arn
 }
