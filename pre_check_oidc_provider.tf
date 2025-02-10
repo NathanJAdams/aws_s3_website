@@ -3,11 +3,11 @@ resource "null_resource" "pre_check_oidc_providers" {
     precondition {
       condition = anytrue([
         alltrue([
-          length(data.aws_iam_openid_connect_provider.existing_oidc_provider.arn) == 0,
+          try(data.aws_iam_openid_connect_provider.existing_oidc_provider.arn, null) == null,
           !var.oidc_use_existing_idp
         ]),
         alltrue([
-          length(data.aws_iam_openid_connect_provider.existing_oidc_provider.arn) == 1,
+          try(data.aws_iam_openid_connect_provider.existing_oidc_provider.arn, null) != null,
           var.oidc_use_existing_idp
         ])
       ])
