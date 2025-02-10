@@ -63,6 +63,13 @@ variable "oidc_role_name" {
 variable "oidc_connector" {
   type        = string
   description = "Which OIDC connector to use, one of [BitBucket, GitHub]"
+  validation {
+    condition = anytrue([
+      var.oidc_connector == "BitBucket",
+      var.oidc_connector == "GitHub"
+    ])
+    error_message = "oidc_connector must be one of [BitBucket, GitHub]"
+  }
 }
 
 variable "oidc_use_existing_idp" {
