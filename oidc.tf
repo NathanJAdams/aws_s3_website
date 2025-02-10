@@ -39,5 +39,5 @@ locals {
   oidc_subject_variable    = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_variable : (local.oidc_is_github ? local.oidc_github_subject_variable : "")
   oidc_subject_value       = local.oidc_is_bitbucket ? local.oidc_bitbucket_subject_value : (local.oidc_is_github ? local.oidc_github_subject_value : "")
 
-  oidc_provider_arn        = var.oidc_use_existing_idp ? data.aws_iam_openid_connect_provider.existing_oidc_provider[0].arn : aws_iam_openid_connect_provider.oidc_provider[0].arn
+  oidc_provider_arn        = var.oidc_use_existing_idp ? data.aws_iam_openid_connect_provider.existing_oidc_provider.arn : aws_iam_openid_connect_provider.oidc_provider[0].arn
 }
