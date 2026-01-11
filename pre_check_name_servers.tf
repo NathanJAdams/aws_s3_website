@@ -23,7 +23,7 @@ resource "null_resource" "pre_check_name_servers" {
         The actual name servers retrieved from https://dns.google/resolve?type=NS&name=${var.bare_domain} are:
         [${join(", ", local.actual_name_servers)}].
 
-        They must match the expected name servers set on the hosted zone which are:
+        They must match the expected name servers in the hosted zone's delegation set which are:
         [${join(", ", local.expected_name_servers)}].
       EOT
     }

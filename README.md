@@ -3,11 +3,13 @@
 Generates a minimal static website backed by S3, available on your https domain using CloudFront as the CDN, and updatable via an OIDC secured AWS role on BitBucket or GitHub.
 
 ## Requirements
+
 A bare domain registered with AWS within a hosted zone.
 For details on how to create a hosted zone [see this guide](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html).
 All other necessary resources will be created.
 
 ## Usage
+
 The module is hosted on GitHub and can be used by referencing the master branch or tag.
 It requires an aws provider in the us-east-1 region named `aws.us_east_1`.
 It can be used as follows:
@@ -42,20 +44,25 @@ module "example_website" {
 ```
 
 ## DNS validation
+
 DNS validation is used to validate the ACM certificate.
 Name servers must be consistent for it to take place, otherwise the module is forced to wait until they are.
 Therefore it is important to **double-check name servers are consistent** between
+
 - Domain
-- Hosted zone
+- Hosted zone's delegation set
 - Publicly accessible name servers, eg. from [https://dns.google/resolve?type=NS&name=example.com](https://dns.google/resolve?type=NS&name=example.com)
 
-This module performs a pre-check between the hosted zone and https://dns.google, but as yet cannot check the domain.
+This module performs a pre-check between the hosted zone's delegation set and https://dns.google, but as yet cannot check the domain.
 If/when hashicorp provide a domain data source, another pre-check will be included that also checks the domain name servers are consistent.
+This module currently only supports hosted zones where the name server records are the same as the delegation set.
 
 ## CloudFront distributions
+
 It can take around 10-15 minutes to create a CloudFront distribution, so leave enough time to allow it to complete, especially if running in an automated pipeline.
 
 ## Deleting a website
+
 Note that deleting a website will delete the bucket and all objects within it.
 If you have any files you want to keep, you should **move them out of the bucket before deleting the website**.
 
@@ -74,8 +81,8 @@ If you have any files you want to keep, you should **move them out of the bucket
 | oidc_connector           |    ✔     |   string    |                | Which OIDC connector to use, one of [BitBucket, GitHub]                                                                                                   |
 | oidc_use_existing_idp    |          |    bool     | true           | Whether to use the existing OIDC identity provider. Set to `false` to create a new one. Only one IDP can be created for GitHub and per BitBucket account. |
 
-
 ## Git provider specific OIDC variables
+
 All the variables in the section associated with `oidc_connector` must be given.
 
 | BitBucket OIDC variables       |  Type  | Description                                          |
@@ -99,6 +106,7 @@ All the variables in the section associated with `oidc_connector` must be given.
 | cloudfront_distribution_id | string | The CloudFront distribution id                                 |
 
 ## Deploying your website
+
 Once this module has been used to set up the website, the IAM role it created can be used in the repository to update files on the bucket and invalidate the CloudFront distribution.
 If the `oidc_connector` used was `BitBucket` this can be done in the bitbucket-pipelines.yml.
 If the `oidc_connector` used was `GitHub` it can be done with a workflow yaml file in the .github/workflows/ folder.
