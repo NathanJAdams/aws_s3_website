@@ -21,10 +21,10 @@ resource "null_resource" "pre_check_name_servers" {
       condition     = local.actual_name_servers == local.expected_name_servers
       error_message = <<-EOT
         The actual name servers retrieved from https://dns.google/resolve?type=NS&name=${var.bare_domain} are:
-        [${join(local.actual_name_servers)}]
+        [${join(', ', local.actual_name_servers)}]
 
         They must match the expected name servers set on the hosted zone which are:
-        [${join(local.expected_name_servers)}].
+        [${join(', ', local.expected_name_servers)}].
       EOT
     }
   }
