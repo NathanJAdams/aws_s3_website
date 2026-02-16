@@ -18,6 +18,7 @@ resource "aws_s3_object" "main_initial_root_file" {
 }
 
 resource "aws_s3_object" "main_initial_error_file" {
+  count        = (var.error_file == null) ? 0 : 1
   bucket       = aws_s3_bucket.main.id
   key          = var.error_file
   content_type = "text/html"

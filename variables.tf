@@ -18,7 +18,8 @@ variable "root_file" {
 variable "error_file" {
   default     = "404.html"
   type        = string
-  description = "The error file object, eg. 404.html"
+  nullable    = true
+  description = "The error file object to be shown for 403 and 404 responses from AWS S3, eg. 404.html. Set this to null to use root_file instead"
 }
 
 variable "price_class" {

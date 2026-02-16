@@ -53,7 +53,7 @@ Therefore it is important to **double-check name servers are consistent** betwee
 - Hosted zone's delegation set
 - Publicly accessible name servers, eg. from [https://dns.google/resolve?type=NS&name=example.com](https://dns.google/resolve?type=NS&name=example.com)
 
-This module performs a pre-check between the hosted zone's delegation set and https://dns.google, but as yet cannot check the domain.
+This module performs a pre-check between the hosted zone's delegation set and <https://dns.google>, but as yet cannot check the domain.
 If/when hashicorp provide a domain data source, another pre-check will be included that also checks the domain name servers are consistent.
 This module currently only supports hosted zones where the name server records are the same as the delegation set.
 
@@ -73,7 +73,7 @@ If you have any files you want to keep, you should **move them out of the bucket
 | bare_domain              |    ✔     |   string    |                | Domain name without a www prefix or leading/trailing dots, eg. `example.com`                                                                              |
 | use_bare_domain          |          |   boolean   | false          | Whether www prefixed urls will be redirected to the bare domain. If false, the bare domain will be redirected to the www prefixed domain                  |
 | root_file                |          |   string    | index.html     | Bucket key of the root file object                                                                                                                        |
-| error_file               |          |   string    | 404.html       | Bucket key of the error file object                                                                                                                       |
+| error_file               |          |   string    | 404.html       | Bucket key of the error file. Set to null to use root_file                                                                                                |
 | price_class              |          |   string    | PriceClass_100 | CloudFront variable, one of [PriceClass_100, PriceClass_200, PriceClass_All]                                                                              |
 | minimum_protocol_version |          |   string    | TLSv1.2_2021   | CloudFront variable, one of [TLSv1.2_2018, TLSv1.2_2019, TLSv1.2_2021]                                                                                    |
 | tags                     |          | map(string) | {}             | Map of <key,value> tags to apply to created resources                                                                                                     |
@@ -98,12 +98,12 @@ All the variables in the section associated with `oidc_connector` must be given.
 
 ## Outputs
 
-| Outputs                    |  Type  | Description                                                    |
-|----------------------------|:------:|----------------------------------------------------------------|
-| url                        | string | The website url, eg. https://www.example.com                   |
-| bucket                     | string | The bucket where files will be read from, e.g. www.example.com |
-| role                       | string | The role with permissions to update the bucket's contents      |
-| cloudfront_distribution_id | string | The CloudFront distribution id                                 |
+| Outputs                    |  Type  | Description                                                     |
+|----------------------------|:------:|-----------------------------------------------------------------|
+| url                        | string | The website url, eg. www\.example.com                           |
+| bucket                     | string | The bucket where files will be read from, e.g. www\.example.com |
+| role                       | string | The role with permissions to update the bucket's contents       |
+| cloudfront_distribution_id | string | The CloudFront distribution id                                  |
 
 ## Deploying your website
 
