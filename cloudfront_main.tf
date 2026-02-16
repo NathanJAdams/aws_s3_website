@@ -14,9 +14,15 @@ resource "aws_cloudfront_distribution" "main" {
   }
   custom_error_response {
     error_caching_min_ttl = 0
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/${(local.error_page)}"
+  }
+  custom_error_response {
+    error_caching_min_ttl = 0
     error_code            = 404
     response_code         = 200
-    response_page_path    = "/${var.error_file}"
+    response_page_path    = "/${(local.error_page)}"
   }
   default_cache_behavior {
     target_origin_id       = local.main_s3_hostname

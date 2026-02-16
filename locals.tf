@@ -7,4 +7,5 @@ locals {
   redirect_https_hostname = "https://${local.redirect_hostname}"
   redirect_s3_hostname    = "S3-${local.redirect_hostname}"
   hostnames               = toset([local.main_hostname, local.redirect_hostname])
+  error_page              = (var.error_file == null) ? var.root_file : var.error_file
 }
