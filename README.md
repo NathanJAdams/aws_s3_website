@@ -29,7 +29,7 @@ module "example_website" {
   bare_domain                 = "example.com"
   oidc_role_name              = "UpdateExampleBucket"
   oidc_connector              = "GitHub"
-  oidc_github_account_name    = "MyGitHubAccount"
+  oidc_github_account_name    = "MyGitHubAccount@AccountId"
   oidc_github_repository_name = "MyGitHubRepository"
   tags                        = {
     Project     = "Example"
